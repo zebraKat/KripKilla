@@ -1,5 +1,5 @@
 if not getgenv()["Animator"] then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/xhayper/Animator/main/Source/Main.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/xhayper/Animator/main/Source/Main.lua",false))()
 	hookAnimatorFunction() -- Hook animator to Humanoid:LoadAnimation()
 end
 
@@ -44,5 +44,5 @@ Configuration.AntiVoiding = true
 Configuration.SetSimulationRadius = true
 Configuration.DisableCharacterScripts = false
 Configuration.Hats = Hats
-local Module = game:HttpGet("https://raw.githubusercontent.com/zebraKat/KripKilla/main/Krypton.lua")
+local Module = game:HttpGet("https://raw.githubusercontent.com/zebraKat/KripKilla/main/Krypton.lua",false)
 loadstring(Module)()

@@ -375,7 +375,7 @@ do -- [[ Scoped Rig Creating. ]]
 				    end
 				    
 				    print(AnimData.Run)
-				    print(AnimData[Run])
+				    print(AnimData["Run"])
 				    CurrentAnimTrack = FakeHumanoid:LoadAnimation(FoundAnimID)
 				    CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
 				    CurrentAnimTrack:Play(TransitionTime)

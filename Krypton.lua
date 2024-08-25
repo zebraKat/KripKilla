@@ -374,8 +374,7 @@ do -- [[ Scoped Rig Creating. ]]
 					CurrentAnimTrack:Destroy()
 				    end
 				    
-				    print(AnimData.Run)
-				    print(AnimData["Run"])
+				   
 				    CurrentAnimTrack = FakeHumanoid:LoadAnimation(FoundAnimID)
 				    CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
 				    CurrentAnimTrack:Play(TransitionTime)
@@ -402,13 +401,14 @@ do -- [[ Scoped Rig Creating. ]]
 
 			local function OnRunning(Speed) 
 				if Speed > 0.1 then
-					PlayAnimation("Run",0.1)
+					print(AnimData["Run"])
+					PlayAnimation(AnimData.Run,0.1)
 					Pose = "Running"
 					if CurrentAnim and CurrentAnim == AnimData.Run then
 						SetAnimationSpeed(Speed /14.5)
 					end
 				else
-				    PlayAnimation("Idle",0.1) 
+				    PlayAnimation(AnimData.Idle,0.1) 
 				    Pose = "Standing"
 				end
 			end

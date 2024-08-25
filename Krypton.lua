@@ -2,6 +2,11 @@
 -- || Gelatek was there
 -- // Defining Variables: Settings
 
+if not getgenv()["Animator"] then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/zebraKat/roblux/main/animatorMain.lua"))()
+	hookAnimatorFunction() -- Hook animator to Humanoid:LoadAnimation()
+end
+
 local Global = getgenv()
 local Configuration = Configuration or {}
 
@@ -375,7 +380,7 @@ do -- [[ Scoped Rig Creating. ]]
 					end
 
 					CurrentAnimSpeed = 1.0
-					CurrentAnimTrack = FakeHumanoid:LoadAnimation(Anim)
+					CurrentAnimTrack = Animator.new(FakeRig,Anim.AnimationId)
 					CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
 
 					CurrentAnimTrack:Play(TransitionTime)

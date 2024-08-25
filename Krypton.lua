@@ -368,7 +368,7 @@ do -- [[ Scoped Rig Creating. ]]
 			local function PlayAnimation(AnimName, TransitionTime)
 				local Anim = AnimationTable[AnimName].Anim
 
-				if Anim.AnimationId ~= CurrentAnimInstance then
+				if Anim.AnimationId ~= CurrentAnimInstance.AnimationId then
 					if CurrentAnimTrack ~= nil then
 						CurrentAnimTrack:Stop(TransitionTime)
 						CurrentAnimTrack:Destroy()
@@ -519,7 +519,6 @@ do -- [[ Scoped Rig Creating. ]]
 				end
 			end)
 
-			table.clear(AnimData)
 		end)
 	end
 end

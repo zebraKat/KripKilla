@@ -394,7 +394,7 @@ do -- [[ Scoped Rig Creating. ]]
 							end
 
 							local AnimSpeed = CurrentAnimSpeed
-							PlayAnimation(RepeatAnim, 0.0)
+							PlayAnimation(RepeatAnim.AnimationId, 0.0)
 							SetAnimationSpeed(AnimSpeed)
 						end
 					end)
@@ -411,7 +411,7 @@ do -- [[ Scoped Rig Creating. ]]
 						print(Speed)
 					if Speed > 5 then
 						PlayAnimation("Walk", 0.1) Pose = "Running"
-						if CurrentAnimInstance and CurrentAnimInstance.AnimationId == "http://www.roblox.com/asset/?id=180426354" then
+						if CurrentAnimInstance and CurrentAnimInstance.AnimationId == AnimData.Walk.Anim.AnimationId then
 							SetAnimationSpeed(Speed / 14.5)
 						end
 					elseif not EmoteNames[CurrentAnim] then 

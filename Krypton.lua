@@ -373,7 +373,8 @@ do -- [[ Scoped Rig Creating. ]]
 					CurrentAnimTrack:Stop()
 					CurrentAnimTrack:Destroy()
 				    end
-
+				    
+				    print(FoundAnimId)
 				    CurrentAnimTrack = FakeHumanoid:LoadAnimation(FoundAnimID)
 				    CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
 				    CurrentAnimTrack:Play(TransitionTime)

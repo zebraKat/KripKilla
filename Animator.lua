@@ -39,9 +39,8 @@ getgenv().hookAnimatorFunction = function()
 		if args[2] then
 			return OldFunc(Object, ...)
 		end
-			print(args[1].AnimationId)
 		if args[1].ClassName == "Animation" then
-			return Animator.new(Object.Parent,args[1].AnimationId)
+			return Animator.new(Object.Parent,args[1])
 		end
 		return Animator.new(Object.Parent, ...)
 	end)

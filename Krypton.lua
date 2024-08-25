@@ -375,7 +375,7 @@ do -- [[ Scoped Rig Creating. ]]
 					end
 
 					CurrentAnimSpeed = 1.0
-					print(Anim)
+					print(typeof(Anim))
 					CurrentAnimTrack = FakeHumanoid:LoadAnimation(tostring(Anim))
 					CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
 

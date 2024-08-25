@@ -39,6 +39,9 @@ getgenv().hookAnimatorFunction = function()
 		if args[2] then
 			return OldFunc(Object, ...)
 		end
+		if args[1].ClassName and args[1].ClassName = "Animation" then
+			return Animator.new(Object.Parent,args[1].AnimationId)
+		end
 		return Animator.new(Object.Parent, ...)
 	end)
 	Utility:sendNotif("Hook Loaded\nby whited#4382", nil, 5)

@@ -411,7 +411,7 @@ do -- [[ Scoped Rig Creating. ]]
 						print(Speed)
 					if Speed > 5 then
 						PlayAnimation("Walk", 0.1) Pose = "Running"
-						if CurrentAnimInstance and CurrentAnimInstance.AnimationId == AnimData.Walk.Anim.AnimationId then
+						if CurrentAnimInstance and CurrentAnimInstance == AnimData.Walk.Anim then
 							SetAnimationSpeed(Speed / 14.5)
 						end
 					elseif not EmoteNames[CurrentAnim] then 
@@ -518,7 +518,7 @@ do -- [[ Scoped Rig Creating. ]]
 					end
 				end
 			end)
-
+			table.clear(AnimData)
 		end)
 	end
 end

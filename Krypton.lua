@@ -1,3 +1,7 @@
+if not getgenv()["animaaaa"] then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/zebraKat/roblux/main/animatorMain.lua"))()
+	hookAnimatorFunction() -- Hook animator to Humanoid:LoadAnimation()
+end
 -- \\ Krypton Reanimate, Author: @xyzkade . https://github.com/KadeTheExploiter/Krypton/ // 
 -- || Gelatek was there
 -- // Defining Variables: Settings
@@ -376,7 +380,7 @@ do -- [[ Scoped Rig Creating. ]]
 
 					CurrentAnimSpeed = 1.0
 					
-					CurrentAnimTrack = FakeHumanoid:LoadAnimation(tostring(Anim.AnimationId))
+					CurrentAnimTrack = animaaaa.new(game.Workspace.Terrain:FindFirstChild("fakeRig"),tostring(Anim.AnimationId))
 					CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
 
 					CurrentAnimTrack:Play(TransitionTime)

@@ -343,7 +343,13 @@ do -- [[ Scoped Rig Creating. ]]
 			local AnimationTable = {}
 			local AnimData = {
 				-- Movement Anims
-				Idle = "http://www.roblox.com/asset/?id=180435571", Walk = "http://www.roblox.com/asset/?id=180426354", Run = "Run.xml", Jump = "http://www.roblox.com/asset/?id=125750702", Fall = "http://www.roblox.com/asset/?id=180436148", Climb = "http://www.roblox.com/asset/?id=180436334", Sit = "http://www.roblox.com/asset/?id=178130996",
+				Idle = "110251469536480",
+				Walk = "91400065271169", 
+				Run = "122484000692443",
+				Jump = "http://www.roblox.com/asset/?id=125750702", 
+				Fall = "http://www.roblox.com/asset/?id=180436148", 
+				Climb = "http://www.roblox.com/asset/?id=180436334", 
+				Sit = "http://www.roblox.com/asset/?id=178130996",
 				-- Animations
 				dance1 = "http://www.roblox.com/asset/?id=182435998", dance2 = "http://www.roblox.com/asset/?id=182436842", dance3 = "http://www.roblox.com/asset/?id=182436935", wave = "http://www.roblox.com/asset/?id=128777973", point = "http://www.roblox.com/asset/?dan=128853357", laugh = "http://www.roblox.com/asset/?id=129423131", cheer = "http://www.roblox.com/asset/?id=129423030"
 			}
@@ -370,7 +376,7 @@ do -- [[ Scoped Rig Creating. ]]
 
 				    CurrentAnimTrack = FakeHumanoid:LoadAnimation(FoundAnimId)
 				    CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
-				    CurrentAnimTrack:Play()
+				    CurrentAnimTrack:Play(TransitionTime)
 
 				    CurrentAnim = FoundAnimID
 				    
@@ -392,8 +398,7 @@ do -- [[ Scoped Rig Creating. ]]
 			local function OnSeated() if AnimationsToggled then Pose = "Seated" end end
 			local function OnPlatformStanding() if AnimationsToggled then Pose = "PlatformStanding" end end
 
-			local function OnRunning(Speed)
-				print(Speed) 
+			local function OnRunning(Speed) 
 				if Speed > 0.1 then
 					PlayAnimation("Run",0.1)
 					Pose = "Running"

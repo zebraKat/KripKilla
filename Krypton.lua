@@ -380,7 +380,7 @@ do -- [[ Scoped Rig Creating. ]]
 
 					CurrentAnimSpeed = 1.0
 					
-					CurrentAnimTrack = animaaaa.new(game.Workspace.Terrain:FindFirstChild("fakeRig"),tostring(Anim.AnimationId))
+					CurrentAnimTrack = animaaaa.new(game.Workspace.Terrain:FindFirstChild("fakeRig"),tostring(Anim))
 					CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
 
 					CurrentAnimTrack:Play(TransitionTime)

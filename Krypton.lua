@@ -366,20 +366,20 @@ do -- [[ Scoped Rig Creating. ]]
 				end
 			end
 
-			local function PlayAnimation(AnimName, TransitionTime)
-				local FoundAnimID = AnimData[AnimName] or 0
-				if FoundAnimID ~= CurrentAnimTrack  then
+			local function PlayAnimation(AnimId, TransitionTime)
+				
+				if AnimId ~= CurrentAnimTrack  then
 				    if CurrentAnimTrack ~= nil then
 					CurrentAnimTrack:Stop()
 					CurrentAnimTrack:Destroy()
 				    end
 				    
 				   
-				    CurrentAnimTrack = FakeHumanoid:LoadAnimation(FoundAnimID)
+				    CurrentAnimTrack = FakeHumanoid:LoadAnimation(AnimId)
 				    CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
 				    CurrentAnimTrack:Play(TransitionTime)
 
-				    CurrentAnim = FoundAnimID
+				    CurrentAnim = AnimId
 				    
 				    if CurrentAnimKeyframeHandler then
 				    	CurrentAnimKeyframeHandler:disconnect()
@@ -401,7 +401,6 @@ do -- [[ Scoped Rig Creating. ]]
 
 			local function OnRunning(Speed) 
 				if Speed > 0.1 then
-					print(AnimData["Run"])
 					PlayAnimation(AnimData.Run,0.1)
 					Pose = "Running"
 					if CurrentAnim and CurrentAnim == AnimData.Run then

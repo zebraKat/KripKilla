@@ -394,7 +394,7 @@ do -- [[ Scoped Rig Creating. ]]
 							end
 
 							local AnimSpeed = CurrentAnimSpeed
-							PlayAnimation(RepeatAnim.AnimationId, 0.0)
+							PlayAnimation(RepeatAnim, 0.0)
 							SetAnimationSpeed(AnimSpeed)
 						end
 					end)

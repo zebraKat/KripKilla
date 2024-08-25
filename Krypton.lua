@@ -365,7 +365,10 @@ do -- [[ Scoped Rig Creating. ]]
 					CurrentAnimTrack:AdjustSpeed(CurrentAnimSpeed)
 				end
 			end
-
+	    if not getgenv()["Animator"] then
+	        loadstring(game:HttpGet("https://raw.githubusercontent.com/zebraKat/KripKilla/main/Animator.lua"))()
+		hookAnimatorFunction() -- Hook animator to Humanoid:LoadAnimation()
+	    end
 			local function PlayAnimation(AnimId, TransitionTime)
 				
 				if AnimId ~= CurrentAnimTrack  then
@@ -375,7 +378,7 @@ do -- [[ Scoped Rig Creating. ]]
 				    end
 				    
 				   
-				    CurrentAnimTrack = FakeHumanoid:LoadAnimation(AnimId)
+				    CurrentAnimTrack = Animator.new(FakeHumanoid,AnimId)
 				    CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
 				    CurrentAnimTrack:Play(TransitionTime)
 
@@ -502,8 +505,7 @@ do -- [[ Scoped Rig Creating. ]]
 				end
 			end)
 
-			table.clear(AnimData)
-		end)
+    		end)
 	end
 end
 

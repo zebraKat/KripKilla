@@ -333,7 +333,7 @@ do -- [[ Scoped Rig Creating. ]]
 			local Pose = "Standing"
 			local CurrentAnim = ""
 
-		
+			local CurrentAnimInstance = nil
 			local CurrentAnimTrack = nil
 			local CurrentAnimKeyframeHandler = nil
 
@@ -343,13 +343,7 @@ do -- [[ Scoped Rig Creating. ]]
 			local AnimationTable = {}
 			local AnimData = {
 				-- Movement Anims
-				Idle = "110251469536480",
-				Walk = "91400065271169", 
-				Run = "122484000692443",
-				Jump = "http://www.roblox.com/asset/?id=125750702", 
-				Fall = "http://www.roblox.com/asset/?id=180436148", 
-				Climb = "http://www.roblox.com/asset/?id=180436334", 
-				Sit = "http://www.roblox.com/asset/?id=178130996",
+				Idle = "rbxassetid://110251469536480", Walk = "rbxassetid://91400065271169", Run = "rbxassetid://122484000692443", Jump = "http://www.roblox.com/asset/?id=125750702", Fall = "http://www.roblox.com/asset/?id=180436148", Climb = "http://www.roblox.com/asset/?id=180436334", Sit = "http://www.roblox.com/asset/?id=178130996",
 				-- Animations
 				dance1 = "http://www.roblox.com/asset/?id=182435998", dance2 = "http://www.roblox.com/asset/?id=182436842", dance3 = "http://www.roblox.com/asset/?id=182436935", wave = "http://www.roblox.com/asset/?id=128777973", point = "http://www.roblox.com/asset/?dan=128853357", laugh = "http://www.roblox.com/asset/?id=129423131", cheer = "http://www.roblox.com/asset/?id=129423030"
 			}
@@ -358,41 +352,52 @@ do -- [[ Scoped Rig Creating. ]]
 			local JumpAnimTime = 0
 			local Time = 0
 
-			
+			for Name, ID in AnimData do
+				AnimationTable[Name] = {}
+				AnimationTable[Name].Anim = Instance.new("Animation")
+				AnimationTable[Name].Anim.AnimationId = ID
+			end
+
 			local function SetAnimationSpeed(Speed)
 				if Speed ~= CurrentAnimSpeed then
 					CurrentAnimSpeed = Speed
 					CurrentAnimTrack:AdjustSpeed(CurrentAnimSpeed)
 				end
 			end
-	    if not getgenv()["Animator"] then
-	        loadstring(game:HttpGet("https://raw.githubusercontent.com/zebraKat/KripKilla/main/Animator.lua"))()
-		hookAnimatorFunction() -- Hook animator to Humanoid:LoadAnimation()
-	    end
-			local function PlayAnimation(AnimId, TransitionTime)
-				
-				if AnimId ~= CurrentAnimTrack  then
-				    if CurrentAnimTrack ~= nil then
-					CurrentAnimTrack:Stop()
-					CurrentAnimTrack:Destroy()
-				    end
-				    
-				   
-				    CurrentAnimTrack = Animator.new(FakeHumanoid,AnimId)
-				    CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
-				    CurrentAnimTrack:Play(TransitionTime)
 
-				    CurrentAnim = AnimId
-				    
-				    if CurrentAnimKeyframeHandler then
-				    	CurrentAnimKeyframeHandler:disconnect()
-				    end
+			local function PlayAnimation(AnimName, TransitionTime)
+				local Anim = AnimationTable[AnimName].Anim
 
-				    CurrentAnimKeyframeHandler = CurrentAnimTrack.KeyframeReached:Connect(function(frame)
-					if frame == "End" then
-						PlayAnimation(CurrentAnim)
+				if Anim ~= CurrentAnimInstance then
+					if CurrentAnimTrack ~= nil then
+						CurrentAnimTrack:Stop(TransitionTime)
+						CurrentAnimTrack:Destroy()
 					end
-				    end)
+
+					CurrentAnimSpeed = 1.0
+					CurrentAnimTrack = FakeHumanoid:LoadAnimation(Anim)
+					CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
+
+					CurrentAnimTrack:Play(TransitionTime)
+					CurrentAnim = AnimName
+					CurrentAnimInstance = Anim
+
+					if CurrentAnimKeyframeHandler then
+						CurrentAnimKeyframeHandler:disconnect()
+					end
+
+					CurrentAnimKeyframeHandler = CurrentAnimTrack.KeyframeReached:Connect(function(FrameName)
+						if FrameName == "End" then
+							local RepeatAnim = CurrentAnim
+							if EmoteNames[RepeatAnim] and EmoteNames[RepeatAnim] == false then
+								RepeatAnim = "Idle"
+							end
+
+							local AnimSpeed = CurrentAnimSpeed
+							PlayAnimation(RepeatAnim, 0.0)
+							SetAnimationSpeed(AnimSpeed)
+						end
+					end)
 				end
 			end
 
@@ -401,34 +406,42 @@ do -- [[ Scoped Rig Creating. ]]
 			local function OnFallingDown() if AnimationsToggled then Pose = "FallingDown" end end
 			local function OnSeated() if AnimationsToggled then Pose = "Seated" end end
 			local function OnPlatformStanding() if AnimationsToggled then Pose = "PlatformStanding" end end
-
-			local function OnRunning(Speed) 
-				if Speed > 0.1 then
-					PlayAnimation(AnimData.Run,0.1)
-					Pose = "Running"
-					if CurrentAnim and CurrentAnim == AnimData.Run then
-						SetAnimationSpeed(Speed /14.5)
+			local function OnRunning(Speed)
+				if AnimationsToggled then
+					if Speed > 0.01 then
+						PlayAnimation("Walk", 0.1) Pose = "Running"
+						if CurrentAnimInstance and CurrentAnimInstance.AnimationId == "http://www.roblox.com/asset/?id=180426354" then
+							SetAnimationSpeed(Speed / 14.5)
+						end
+					elseif not EmoteNames[CurrentAnim] then 
+						PlayAnimation("Idle", 0.1) Pose = "Standing"
 					end
-				else
-				    PlayAnimation(AnimData.Idle,0.1) 
-				    Pose = "Standing"
 				end
 			end
 
 			local function OnJumping()
-
+				if AnimationsToggled then 
+					PlayAnimation("Jump", 0.1)
+					JumpAnimTime = 0.3
+					Pose = "Jumping"
+				end
 			end
 
 			local function OnClimbing(Speed)
-			
+				if AnimationsToggled then
+					PlayAnimation("Climb", 0.1) SetAnimationSpeed(Speed / 12.0) Pose = "Climbing"
+				end
 			end
 
 			local function OnFreeFall()
-				
+				if AnimationsToggled then
+					if JumpAnimTime <= 0 then PlayAnimation("Fall", 0.3) end
+					Pose = "FreeFall"
+				end
 			end
 
 			local function OnSwimming(Speed)
-			
+				if AnimationsToggled then Pose = Speed >= 0 and "Running" or "Standing" end
 			end
 
 			FakeHumanoid.Died:Connect(OnDied)
@@ -505,7 +518,8 @@ do -- [[ Scoped Rig Creating. ]]
 				end
 			end)
 
-    		end)
+			table.clear(AnimData)
+		end)
 	end
 end
 

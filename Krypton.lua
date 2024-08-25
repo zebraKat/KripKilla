@@ -183,7 +183,7 @@ end
 
 do -- [[ Scoped Rig Creating. ]]
 	local HumanoidDesc = Instance.new("HumanoidDescription")
-	local Animator = Instance.new("Animator")
+	local AnimatorOBJ = Instance.new("Animator")
 	local Animate = Instance.new("LocalScript")
 
 	local function MakeMotor6D(Name, Part0, Part1, C0, C1)
@@ -236,7 +236,7 @@ do -- [[ Scoped Rig Creating. ]]
 	RightLeg.Name = "Right Leg"
 	LeftLeg.Name = "Left Leg"
 
-	Animator.Parent = FakeHumanoid
+	AnimatorOBJ.Parent = FakeHumanoid
 	HumanoidDesc.Parent = FakeHumanoid
 
 	FakeHumanoid.Parent = FakeRig
@@ -1126,15 +1126,15 @@ Global.KadeAPI = {
 	end,
 
 	SetAnimationState = function(Status) -- Stops Animations
-		local Animator = BetterFindFirstChildOfClass(FakeHumanoid, "Animator")
+		local AnimatorOBJ = BetterFindFirstChildOfClass(FakeHumanoid, "Animator")
 		local Animate = FakeRig:FindFirstChild("Animate")
 		
 		if Animate then
 			Animate.Disabled = not Status
 		end
 		
-		if not Status and Animator then
-			for _, Track in Animator:GetPlayingAnimationTracks() do
+		if not Status and AnimatorOBJ then
+			for _, Track in AnimatorOBJ:GetPlayingAnimationTracks() do
 				Track:Stop()
 			end
 		end

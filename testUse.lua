@@ -1,5 +1,5 @@
 if not getgenv()["Animator"] then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/xhayper/Animator/main/Source/Main.lua",false))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/zebraKat/KripKilla/main/Animator.lua",false))()
 	hookAnimatorFunction() -- Hook animator to Humanoid:LoadAnimation()
 end
 

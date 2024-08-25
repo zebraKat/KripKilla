@@ -2,11 +2,6 @@
 -- || Gelatek was there
 -- // Defining Variables: Settings
 
-if not getgenv()["Animator"] then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/zebraKat/roblux/main/animatorMain.lua"))()
-	hookAnimatorFunction() -- Hook animator to Humanoid:LoadAnimation()
-end
-
 local Global = getgenv()
 local Configuration = Configuration or {}
 
@@ -183,7 +178,7 @@ end
 
 do -- [[ Scoped Rig Creating. ]]
 	local HumanoidDesc = Instance.new("HumanoidDescription")
-	local AnimatorOBJ = Instance.new("Animator")
+	local Animator = Instance.new("Animator")
 	local Animate = Instance.new("LocalScript")
 
 	local function MakeMotor6D(Name, Part0, Part1, C0, C1)
@@ -236,7 +231,7 @@ do -- [[ Scoped Rig Creating. ]]
 	RightLeg.Name = "Right Leg"
 	LeftLeg.Name = "Left Leg"
 
-	AnimatorOBJ.Parent = FakeHumanoid
+	Animator.Parent = FakeHumanoid
 	HumanoidDesc.Parent = FakeHumanoid
 
 	FakeHumanoid.Parent = FakeRig
@@ -380,7 +375,7 @@ do -- [[ Scoped Rig Creating. ]]
 					end
 
 					CurrentAnimSpeed = 1.0
-					CurrentAnimTrack = Animator.new(FakeRig,Anim.AnimationId)
+					CurrentAnimTrack = FakeHumanoid:LoadAnimation(Anim)
 					CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
 
 					CurrentAnimTrack:Play(TransitionTime)
@@ -1126,15 +1121,15 @@ Global.KadeAPI = {
 	end,
 
 	SetAnimationState = function(Status) -- Stops Animations
-		local AnimatorOBJ = BetterFindFirstChildOfClass(FakeHumanoid, "Animator")
+		local Animator = BetterFindFirstChildOfClass(FakeHumanoid, "Animator")
 		local Animate = FakeRig:FindFirstChild("Animate")
 		
 		if Animate then
 			Animate.Disabled = not Status
 		end
 		
-		if not Status and AnimatorOBJ then
-			for _, Track in AnimatorOBJ:GetPlayingAnimationTracks() do
+		if not Status and Animator then
+			for _, Track in Animator:GetPlayingAnimationTracks() do
 				Track:Stop()
 			end
 		end

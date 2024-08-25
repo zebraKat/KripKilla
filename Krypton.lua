@@ -374,7 +374,7 @@ do -- [[ Scoped Rig Creating. ]]
 					CurrentAnimTrack:Destroy()
 				    end
 
-				    CurrentAnimTrack = FakeHumanoid:LoadAnimation(FoundAnimId)
+				    CurrentAnimTrack = FakeHumanoid:LoadAnimation(FoundAnimID)
 				    CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
 				    CurrentAnimTrack:Play(TransitionTime)
 

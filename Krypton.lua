@@ -201,54 +201,7 @@ do -- [[ Scoped Rig Creating. ]]
 		Attachment.Name = Name
 		Attachment.CFrame = CFrame
 		Attachment.Parent = Parent
-	endif not getgenv()["Animator"] then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/xhayper/Animator/main/Source/Main.lua",false))()
-	hookAnimatorFunction() -- Hook animator to Humanoid:LoadAnimation()
-end
-
-local Hats = {
-    -- ["Head"] = {
-    --     {Mesh= "rbxassetid://17517530794", Texture = "rbxassetid://17517478791", Name = "Kleos Erebus", Offset = CFrame.Angles(0,0,0)}
-    -- },
-    ["Right Arm"] = {
-        {Texture = "4645402630", Mesh = "3030546036", Name = "International Fedora", Offset = CFrame.Angles(math.rad(-90), 0, math.rad(90))}
-    },
-
-    ["Left Arm"] = {
-        {Texture = "3650139425", Mesh = "3030546036", Name = "International Fedora", Offset = CFrame.Angles(math.rad(-90), 0, math.rad(-90))}
-    },
-
-    ["Right Leg"] = {
-        {Texture = "4622077774", Mesh = "3030546036", Name = "International Fedora", Offset = CFrame.Angles(math.rad(-90), 0, math.rad(90))}
-    },
-
-    ["Left Leg"] = {
-        {Texture = "3860099469", Mesh = "3030546036", Name = "InternationalFedora", Offset = CFrame.Angles(math.rad(-90), 0, math.rad(-90))}
-    },
-
-    ["Torso"] = {
-        {Texture = "4819722776", Mesh = "4819720316", Name = "MeshPartAccessory", Offset = CFrame.Angles(0, 0, math.rad(-15))}
-    }
-    
-}
-
-
-
-Configuration = {}
-Configuration.ReturnOnDeath = true
-Configuration.Flinging = true
-Configuration.PresetFling = Configuration.Flinging -- set to false if you gonna use the one from library
-Configuration.Animations = true
-Configuration.WaitTime = 0.22
-Configuration.RigName = "fakeRig"
-Configuration.TeleportOffsetRadius = 10
-Configuration.NoCollisions = false
-Configuration.AntiVoiding = true
-Configuration.SetSimulationRadius = true
-Configuration.DisableCharacterScripts = false
-Configuration.Hats = Hats
-local Module = game:HttpGet("https://raw.githubusercontent.com/zebraKat/KripKilla/main/Krypton.lua",false)
-loadstring(Module)()
+	end
 
 	local Torso = Instance.new("Part")
 	local RightArm = Instance.new("Part")
@@ -390,7 +343,7 @@ loadstring(Module)()
 			local AnimationTable = {}
 			local AnimData = {
 				-- Movement Anims
-				Idle = "110251469536480", Walk = "91400065271169", Run = "122484000692443", Jump = "125750702", Fall = "180436148", Climb = "180436334", Sit = "178130996",
+				Idle = "rbxassetid://110251469536480", Walk = "rbxassetid://122484000692443", Run = "rbxassetid://122484000692443", Jump = "http://www.roblox.com/asset/?id=125750702", Fall = "http://www.roblox.com/asset/?id=180436148", Climb = "http://www.roblox.com/asset/?id=180436334", Sit = "http://www.roblox.com/asset/?id=178130996",
 				-- Animations
 				dance1 = "http://www.roblox.com/asset/?id=182435998", dance2 = "http://www.roblox.com/asset/?id=182436842", dance3 = "http://www.roblox.com/asset/?id=182436935", wave = "http://www.roblox.com/asset/?id=128777973", point = "http://www.roblox.com/asset/?dan=128853357", laugh = "http://www.roblox.com/asset/?id=129423131", cheer = "http://www.roblox.com/asset/?id=129423030"
 			}
@@ -401,7 +354,7 @@ loadstring(Module)()
 
 			for Name, ID in AnimData do
 				AnimationTable[Name] = {}
-				AnimationTable[Name].Anim = {}
+				AnimationTable[Name].Anim = Instance.new("Animation")
 				AnimationTable[Name].Anim.AnimationId = ID
 			end
 
@@ -422,7 +375,7 @@ loadstring(Module)()
 					end
 
 					CurrentAnimSpeed = 1.0
-					CurrentAnimTrack = FakeHumanoid:LoadAnimation(Anim.AnimationId)
+					CurrentAnimTrack = FakeHumanoid:LoadAnimation(Anim)
 					CurrentAnimTrack.Priority = Enum.AnimationPriority.Core
 
 					CurrentAnimTrack:Play(TransitionTime)
@@ -454,12 +407,10 @@ loadstring(Module)()
 			local function OnSeated() if AnimationsToggled then Pose = "Seated" end end
 			local function OnPlatformStanding() if AnimationsToggled then Pose = "PlatformStanding" end end
 			local function OnRunning(Speed)
-					print("OnRunning")
-				if AnimationsToggled == true then
-						print(Speed)
-					if Speed > 0.8 then
+				if AnimationsToggled then
+					if Speed > 0.01 then
 						PlayAnimation("Walk", 0.1) Pose = "Running"
-						if CurrentAnimInstance and AnimData.Walk and CurrentAnimInstance == AnimData.Walk then
+						if CurrentAnimInstance and CurrentAnimInstance.AnimationId == "rbxassetid://122484000692443" then
 							SetAnimationSpeed(Speed / 14.5)
 						end
 					elseif not EmoteNames[CurrentAnim] then 
@@ -566,6 +517,8 @@ loadstring(Module)()
 					end
 				end
 			end)
+
+			table.clear(AnimData)
 		end)
 	end
 end

@@ -407,9 +407,10 @@ do -- [[ Scoped Rig Creating. ]]
 			local function OnSeated() if AnimationsToggled then Pose = "Seated" end end
 			local function OnPlatformStanding() if AnimationsToggled then Pose = "PlatformStanding" end end
 			local function OnRunning(Speed)
+					print("OnRunning")
 				if AnimationsToggled then
 						print(Speed)
-					if Speed > 5 then
+					if Speed > 0.8 then
 						PlayAnimation("Walk", 0.1) Pose = "Running"
 						if CurrentAnimInstance and AnimData.Walk and CurrentAnimInstance == AnimData.Walk then
 							SetAnimationSpeed(Speed / 14.5)
@@ -518,7 +519,6 @@ do -- [[ Scoped Rig Creating. ]]
 					end
 				end
 			end)
-			table.clear(AnimData)
 		end)
 	end
 end
